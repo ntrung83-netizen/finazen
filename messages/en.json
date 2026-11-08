@@ -1,0 +1,67 @@
+{
+  "common": {
+    "brandName": "Finazen",
+    "tagline": "Independent Personal Finance Comparison & Trusted Advisory Lead Platform in Vietnam",
+    "disclaimer": "Finazen is NOT a bank or an insurer. We operate as an independent comparison engine and solely forward advisory inquiries to verified financial partner institutions upon your explicit consent pursuant to Vietnam Law on Personal Data Protection No. 91/2025/QH15.",
+    "partnerNotice": "Actual interest rates, limits, and contract terms are assessed and decided exclusively by the licensed partner bank or financial institution.",
+    "viewDetails": "View Details",
+    "compareNow": "Compare Rates",
+    "requestAdvice": "Request Advisory",
+    "calculate": "Calculate",
+    "applyFilter": "Apply Filter",
+    "clearFilter": "Reset",
+    "loading": "Loading data...",
+    "language": "Language",
+    "vietnamese": "Tiếng Việt",
+    "english": "English",
+    "updatedAt": "Updated on",
+    "nominalRate": "Preferential Rate",
+    "effectiveRate": "Floating / Post-Promo Rate",
+    "term": "Term",
+    "maxLoanRatio": "Max LTV / Ratio",
+    "monthlyEstimate": "Estimated Monthly Payment"
+  },
+  "nav": {
+    "home": "Home",
+    "loans": "Loans",
+    "homeLoan": "Home Loan",
+    "carLoan": "Car Loan",
+    "consumerLoan": "Personal Loan",
+    "creditCard": "Credit Cards",
+    "businessLoan": "Business Household Loan",
+    "savings": "Savings Deposit",
+    "insurance": "Insurance",
+    "calculators": "Loan Calculators",
+    "guides": "Financial Guides",
+    "account": "Account",
+    "admin": "Admin Console"
+  },
+  "pdp": {
+    "title": "Personal Data Protection (Law No. 91/2025/QH15 & Decree 356/2025/ND-CP)",
+    "consentHeading": "Explicit Consent for Data Processing & Partner Lead Referral",
+    "consentCheckbox": "I have read, understood, and explicitly CONSENT to Finazen collecting, processing, and forwarding the personal details provided above to my selected partner bank/insurer for the sole purpose of receiving financial advisory for this request.",
+    "purposeLimitation": "Purpose Limitation: Strictly used for financial advisory consultation and reconciliation with the designated partner institution.",
+    "dataSubjectRights": "Data Subject Rights: You are entitled to access, rectify, request deletion of your personal data, or withdraw consent at any time via Account Settings.",
+    "retentionPolicy": "Retention Limit: Retained for up to 12 months following completion of lead referral or as mandated by Vietnamese legislation.",
+    "untickedNotice": "This consent checkbox is UNCHECKED by default in strict compliance with Vietnamese Law.",
+    "auditRecorded": "Your consent action is cryptographically recorded with an immutable audit trail for full transparency."
+  },
+  "finance": {
+    "currencyUnit": "₫",
+    "percentUnit": "%/yr",
+    "monthsUnit": "months",
+    "yearsUnit": "years",
+    "reducingBalance": "Reducing Balance Method",
+    "flatRate": "Flat Rate Method",
+    "principal": "Loan Amount",
+    "tenure": "Loan Tenure",
+    "interestRate": "Annual Interest Rate",
+    "gracePeriod": "Promotional Rate Period"
+  },
+  "roles": {
+    "user": "Individual User",
+    "advisor": "Certified Advisor",
+    "partner": "Partner Institution",
+    "admin": "System Administrator"
+  }
+}

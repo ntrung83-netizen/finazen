@@ -1,0 +1,176 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net: Default deny all reads and writes
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper Functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) ||
+        (request.auth.token.email == 'ntrung83@gmail.com' && request.auth.token.email_verified == true)
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Partners: Public read for active institutions (banks, insurers, finance cos)
+    match /partners/{partnerId} {
+      allow get: if (resource.data.isActive == true) || isAdmin();
+      allow list: if resource.data.isActive == true || isAdmin();
+      allow write: if false; // Admin route handler via Admin SDK only
+    }
+
+    // Offers: Public read for published financial products
+    match /offers/{offerId} {
+      allow get: if (resource.data.status == 'published') || isAdmin();
+      allow list: if resource.data.status == 'published' || isAdmin();
+      allow write: if false; // Modifiable only via Admin SDK
+    }
+
+    // Offer Rate History: Read-only for published parent offers
+    match /offers/{offerId}/rateHistory/{historyId} {
+      allow get, list: if get(/databases/$(database)/documents/offers/$(offerId)).data.status == 'published' || isAdmin();
+      allow write: if false;
+    }
+
+    // Offer Statistics Shards: High-throughput distributed counters (Internal / Admin only)
+    match /offerStats/{offerId}/shards/{shardId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // Users: Owner can read profile; writes through server or restricted fields
+    match /users/{userId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
+      allow create: if isOwner(userId)
+        && request.resource.data.keys().hasAll(['createdAt', 'schemaVersion'])
+        && request.resource.data.createdAt == request.time
+        && (!request.resource.data.keys().hasAny(['role', 'phoneVerified', 'deletedAt']));
+      allow update: if isOwner(userId)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['displayName', 'photoURL', 'locale', 'marketingConsent', 'lastLoginAt'])
+        && (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'phoneVerified', 'deletedAt', 'createdAt']));
+      allow delete: if false; // Right-to-be-forgotten handled via DSR server workflow
+    }
+
+    // User Bookmarks subcollection
+    match /users/{userId}/bookmarks/{offerId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // User Notifications subcollection
+    match /users/{userId}/notifications/{notificationId} {
+      allow read: if isOwner(userId);
+      allow update: if isOwner(userId) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['read', 'readAt']);
+      allow create, delete: if false;
+    }
+
+    // Reviews: Authenticated + phoneVerified users only. 1 review per offer per user (ID: offerId_uid)
+    match /reviews/{reviewId} {
+      allow get: if resource.data.status == 'approved' || (isSignedIn() && resource.data.uid == request.auth.uid) || isAdmin();
+      allow list: if resource.data.status == 'approved' || (isSignedIn() && resource.data.uid == request.auth.uid) || isAdmin();
+      allow create: if isSignedIn()
+        && isValidId(reviewId)
+        && reviewId == request.resource.data.offerId + '_' + request.auth.uid
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.body is string
+        && request.resource.data.body.size() >= 20
+        && request.resource.data.body.size() <= 2000
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5
+        && request.resource.data.createdAt == request.time
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.phoneVerified == true;
+      allow update, delete: if isAdmin();
+    }
+
+    // Articles & Editorial Guides: Public read for published articles
+    match /articles/{articleId} {
+      allow get: if (resource.data.status == 'published') || isAdmin();
+      allow list: if resource.data.status == 'published' || isAdmin();
+      allow write: if false;
+    }
+
+    // Authors: Public read
+    match /authors/{authorId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // SEO Pages: Public read
+    match /seoPages/{slug} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Redirects: Public read
+    match /redirects/{redirectId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // System Settings: Public settings are readable, private settings are strictly denied
+    match /settings/public {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /settings/private {
+      allow read, write: if false;
+    }
+
+    // SENSITIVE ENTERPRISE & PII COLLECTIONS (Strict Deny-All Client Access)
+    // All operations on these must go through server-side Route Handlers with Firebase Admin SDK
+
+    // Leads & Lead Events
+    match /leads/{leadId} {
+      allow read, write: if false;
+    }
+    match /leads/{leadId}/events/{eventId} {
+      allow read, write: if false;
+    }
+
+    // Lead PII Vault (AES-256-GCM encrypted + HMAC-SHA256 indexed)
+    match /leadPii/{leadId} {
+      allow read, write: if false;
+    }
+
+    // Partner Webhook Delivery & Integrations
+    match /leadDeliveries/{deliveryId} {
+      allow read, write: if false;
+    }
+    match /partnerIntegrations/{partnerId} {
+      allow read, write: if false;
+    }
+
+    // Audit Logs & DSR Compliance (Law 91/2025/QH15)
+    match /auditLogs/{logId} {
+      allow read, write: if false;
+    }
+    match /consent_logs/{logId} {
+      allow read, write: if false;
+    }
+    match /dsrRequests/{requestId} {
+      allow read, write: if false;
+    }
+
+    // Admin collection
+    match /admins/{adminId} {
+      allow read, write: if false;
+    }
+  }
+}

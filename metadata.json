@@ -1,0 +1,6 @@
+{
+  "name": "Finazen - Nền tảng So sánh Tài chính Cá nhân",
+  "description": "Nền tảng so sánh lãi suất vay, gửi tiết kiệm và bảo hiểm độc lập tại Việt Nam, tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

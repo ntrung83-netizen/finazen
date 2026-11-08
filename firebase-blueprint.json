@@ -1,0 +1,425 @@
+{
+  "entities": {
+    "Partner": {
+      "title": "Partner",
+      "description": "Licensed Vietnamese bank, insurer, or finance company",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string" },
+        "name": { "type": "string" },
+        "shortName": { "type": "string" },
+        "type": { "type": "string", "enum": ["bank", "insurer", "finance_company"] },
+        "logoUrl": { "type": "string" },
+        "website": { "type": "string" },
+        "brandColor": { "type": "string" },
+        "descriptionVi": { "type": "string" },
+        "descriptionEn": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "isSample": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["slug", "name", "shortName", "type", "isActive", "isSample", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "Financial comparison offer (loan, deposit, insurance, card)",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string" },
+        "partnerId": { "type": "string" },
+        "partner": { "type": "object" },
+        "category": { "type": "string", "enum": ["loan", "deposit", "insurance", "card"] },
+        "subcategory": { "type": "string" },
+        "titleVi": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "summaryVi": { "type": "string" },
+        "summaryEn": { "type": "string" },
+        "detailsVi": { "type": "string" },
+        "detailsEn": { "type": "string" },
+        "rate": { "type": "number" },
+        "promoRate": { "type": "number" },
+        "promoMonths": { "type": "number" },
+        "floatingMargin": { "type": "number" },
+        "estFloatingRate": { "type": "number" },
+        "fee": { "type": "number" },
+        "minAmount": { "type": "number" },
+        "maxAmount": { "type": "number" },
+        "maxTermMonths": { "type": "number" },
+        "maxLtvPct": { "type": "number" },
+        "prepaymentFeePct": { "type": "number" },
+        "prepaymentFeeYears": { "type": "number" },
+        "approvalDays": { "type": "number" },
+        "minIncome": { "type": "number" },
+        "collateralRequired": { "type": "boolean" },
+        "termRates": { "type": "object" },
+        "attributes": { "type": "object" },
+        "badges": { "type": "array" },
+        "status": { "type": "string", "enum": ["draft", "pending_review", "published", "archived"] },
+        "isSponsored": { "type": "boolean" },
+        "isSample": { "type": "boolean" },
+        "rateEffectiveFrom": { "type": "string", "format": "date-time" },
+        "rateSourceUrl": { "type": "string" },
+        "verifiedAt": { "type": "string", "format": "date-time" },
+        "verifiedBy": { "type": "string" },
+        "publishAt": { "type": "string", "format": "date-time" },
+        "searchKeywords": { "type": "array" },
+        "rankScore": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["slug", "partnerId", "category", "subcategory", "titleVi", "status", "isSample", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "RateHistory": {
+      "title": "RateHistory",
+      "description": "Historical snapshot of rate terms",
+      "type": "object",
+      "properties": {
+        "rate": { "type": "number" },
+        "promoRate": { "type": "number" },
+        "promoMonths": { "type": "number" },
+        "floatingMargin": { "type": "number" },
+        "effectiveFrom": { "type": "string", "format": "date-time" },
+        "recordedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["rate", "effectiveFrom", "createdAt", "schemaVersion"]
+    },
+    "OfferStatShard": {
+      "title": "OfferStatShard",
+      "description": "Distributed counter shard for offer metrics",
+      "type": "object",
+      "properties": {
+        "views": { "type": "number" },
+        "leads": { "type": "number" },
+        "saves": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["views", "leads", "saves", "updatedAt", "schemaVersion"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Registered user profile with data consent status",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "locale": { "type": "string" },
+        "phoneVerified": { "type": "boolean" },
+        "marketingConsent": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLoginAt": { "type": "string", "format": "date-time" },
+        "deletedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["createdAt", "schemaVersion"]
+    },
+    "Lead": {
+      "title": "Lead",
+      "description": "Advisory lead metadata (PII separated)",
+      "type": "object",
+      "properties": {
+        "referenceCode": { "type": "string" },
+        "uid": { "type": "string" },
+        "offerId": { "type": "string" },
+        "partnerId": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "termMonths": { "type": "number" },
+        "province": { "type": "string" },
+        "incomeBand": { "type": "string" },
+        "employmentType": { "type": "string" },
+        "status": { "type": "string", "enum": ["new", "sent", "received", "contacting", "approved", "rejected", "disbursed", "closed"] },
+        "assignedTo": { "type": "string" },
+        "slaDueAt": { "type": "string", "format": "date-time" },
+        "source": { "type": "object" },
+        "duplicateOf": { "type": "string" },
+        "consent": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["referenceCode", "offerId", "partnerId", "category", "status", "consent", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "LeadPii": {
+      "title": "LeadPii",
+      "description": "Encrypted PII accessible exclusively by backend server",
+      "type": "object",
+      "properties": {
+        "fullNameEnc": { "type": "string" },
+        "phoneEnc": { "type": "string" },
+        "emailEnc": { "type": "string" },
+        "phoneHash": { "type": "string" },
+        "emailHash": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["fullNameEnc", "phoneEnc", "phoneHash", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "LeadDelivery": {
+      "title": "LeadDelivery",
+      "description": "Webhook and partner dispatch delivery logs",
+      "type": "object",
+      "properties": {
+        "leadId": { "type": "string" },
+        "partnerId": { "type": "string" },
+        "attempt": { "type": "number" },
+        "httpStatus": { "type": "number" },
+        "latencyMs": { "type": "number" },
+        "responseExcerpt": { "type": "string" },
+        "nextRetryAt": { "type": "string", "format": "date-time" },
+        "state": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["leadId", "partnerId", "attempt", "state", "createdAt", "schemaVersion"]
+    },
+    "PartnerIntegration": {
+      "title": "PartnerIntegration",
+      "description": "Partner webhook and automated lead delivery credentials",
+      "type": "object",
+      "properties": {
+        "webhookUrl": { "type": "string" },
+        "categories": { "type": "array" },
+        "mode": { "type": "string", "enum": ["test", "live"] },
+        "enabled": { "type": "boolean" },
+        "secretRef": { "type": "string" },
+        "lastRotatedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["webhookUrl", "categories", "mode", "enabled", "secretRef", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Verified customer review on a financial product",
+      "type": "object",
+      "properties": {
+        "offerId": { "type": "string" },
+        "uid": { "type": "string" },
+        "rating": { "type": "number" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "verifiedCustomer": { "type": "boolean" },
+        "moderation": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["offerId", "uid", "rating", "title", "body", "status", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "Article": {
+      "title": "Article",
+      "description": "Educational financial guide and regulatory overview",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string" },
+        "topic": { "type": "string" },
+        "titleVi": { "type": "string" },
+        "titleEn": { "type": "string" },
+        "excerptVi": { "type": "string" },
+        "excerptEn": { "type": "string" },
+        "bodyVi": { "type": "string" },
+        "bodyEn": { "type": "string" },
+        "authorId": { "type": "string" },
+        "reviewerId": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "seo": { "type": "object" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["slug", "topic", "titleVi", "status", "authorId", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "Author": {
+      "title": "Author",
+      "description": "Verified financial editor and expert analyst profile",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "bio": { "type": "string" },
+        "credentials": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "linkedin": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["name", "role", "bio", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "SeoPage": {
+      "title": "SeoPage",
+      "description": "Canonical SEO metadata and structured intro content",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "h1": { "type": "string" },
+        "introVi": { "type": "string" },
+        "introEn": { "type": "string" },
+        "faq": { "type": "array" },
+        "ogImage": { "type": "string" },
+        "noindex": { "type": "boolean" },
+        "canonical": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["title", "description", "h1", "createdAt", "updatedAt", "schemaVersion"]
+    },
+    "Redirect": {
+      "title": "Redirect",
+      "description": "Permanent or temporary URL redirect mapping",
+      "type": "object",
+      "properties": {
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "code": { "type": "number", "enum": [301, 302] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["from", "to", "code", "createdAt", "schemaVersion"]
+    },
+    "Setting": {
+      "title": "Setting",
+      "description": "System-wide public or private settings",
+      "type": "object",
+      "properties": {
+        "hotline": { "type": "string" },
+        "supportEmail": { "type": "string" },
+        "consentTexts": { "type": "object" },
+        "retentionMonths": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["updatedAt", "schemaVersion"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Append-only immutable security audit log",
+      "type": "object",
+      "properties": {
+        "actorUid": { "type": "string" },
+        "actorEmail": { "type": "string" },
+        "role": { "type": "string" },
+        "action": { "type": "string" },
+        "entity": { "type": "string" },
+        "entityId": { "type": "string" },
+        "before": { "type": "object" },
+        "after": { "type": "object" },
+        "ip": { "type": "string" },
+        "userAgent": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["action", "entity", "entityId", "createdAt", "schemaVersion"]
+    },
+    "DsrRequest": {
+      "title": "DsrRequest",
+      "description": "Data subject rights request under Vietnam Law 91/2025/QH15",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "type": { "type": "string", "enum": ["access", "correct", "delete", "withdraw"] },
+        "status": { "type": "string", "enum": ["pending", "in_progress", "completed", "rejected"] },
+        "dueAt": { "type": "string", "format": "date-time" },
+        "handledBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "schemaVersion": { "type": "number" }
+      },
+      "required": ["uid", "type", "status", "dueAt", "createdAt", "updatedAt", "schemaVersion"]
+    }
+  },
+  "firestore": {
+    "/partners/{partnerId}": {
+      "schema": "Partner",
+      "description": "Licensed Vietnamese financial institutions"
+    },
+    "/offers/{offerId}": {
+      "schema": "Offer",
+      "description": "Publicly searchable comparison offers"
+    },
+    "/offers/{offerId}/rateHistory/{autoId}": {
+      "schema": "RateHistory",
+      "description": "Historical interest rate tracking"
+    },
+    "/offerStats/{offerId}/shards/{shardId}": {
+      "schema": "OfferStatShard",
+      "description": "10-shard distributed write counters for page views and leads"
+    },
+    "/users/{uid}": {
+      "schema": "User",
+      "description": "User profile"
+    },
+    "/users/{uid}/bookmarks/{offerId}": {
+      "schema": "User",
+      "description": "Saved comparison bookmarks"
+    },
+    "/users/{uid}/notifications/{id}": {
+      "schema": "User",
+      "description": "User personal notices"
+    },
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Consented lead records (Admin SDK only)"
+    },
+    "/leadPii/{leadId}": {
+      "schema": "LeadPii",
+      "description": "Encrypted PII vault (Admin SDK only)"
+    },
+    "/leads/{leadId}/events/{id}": {
+      "schema": "Lead",
+      "description": "Lead lifecycle audit events"
+    },
+    "/leadDeliveries/{id}": {
+      "schema": "LeadDelivery",
+      "description": "Partner webhook dispatch logs"
+    },
+    "/partnerIntegrations/{partnerId}": {
+      "schema": "PartnerIntegration",
+      "description": "Partner webhook credentials & config"
+    },
+    "/reviews/{id}": {
+      "schema": "Review",
+      "description": "Product ratings and reviews"
+    },
+    "/articles/{id}": {
+      "schema": "Article",
+      "description": "Educational articles & legal guides"
+    },
+    "/authors/{id}": {
+      "schema": "Author",
+      "description": "Verified financial editor profiles"
+    },
+    "/seoPages/{pathKey}": {
+      "schema": "SeoPage",
+      "description": "Canonical SEO & intro copy"
+    },
+    "/redirects/{id}": {
+      "schema": "Redirect",
+      "description": "Redirect rules"
+    },
+    "/settings/{settingId}": {
+      "schema": "Setting",
+      "description": "Public & Private system settings"
+    },
+    "/auditLogs/{id}": {
+      "schema": "AuditLog",
+      "description": "Append-only system audit trail"
+    },
+    "/dsrRequests/{id}": {
+      "schema": "DsrRequest",
+      "description": "PDP Law No. 91/2025/QH15 requests"
+    }
+  }
+}

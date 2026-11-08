@@ -1,0 +1,67 @@
+{
+  "common": {
+    "brandName": "Finazen",
+    "tagline": "Nền tảng so sánh tài chính độc lập & tư vấn tín nhiệm tại Việt Nam",
+    "disclaimer": "Finazen KHÔNG PHẢI là ngân hàng hay công ty bảo hiểm. Chúng tôi là nền tảng so sánh độc lập và chỉ chuyển tiếp yêu cầu tư vấn đến các tổ chức tài chính đối tác khi có sự đồng thuận rõ ràng của Quý khách theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15.",
+    "partnerNotice": "Lãi suất và điều khoản thực tế do ngân hàng hoặc tổ chức tài chính đối tác thẩm định và quyết định tại thời điểm ký kết.",
+    "viewDetails": "Xem chi tiết",
+    "compareNow": "So sánh ngay",
+    "requestAdvice": "Đăng ký tư vấn",
+    "calculate": "Tính toán",
+    "applyFilter": "Lọc kết quả",
+    "clearFilter": "Đặt lại",
+    "loading": "Đang tải dữ liệu...",
+    "language": "Ngôn ngữ",
+    "vietnamese": "Tiếng Việt",
+    "english": "English",
+    "updatedAt": "Cập nhật ngày",
+    "nominalRate": "Lãi suất ưu đãi",
+    "effectiveRate": "Lãi suất sau ưu đãi",
+    "term": "Thời hạn",
+    "maxLoanRatio": "Hạn mức vay tối đa",
+    "monthlyEstimate": "Ước tính trả hàng tháng"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "loans": "Gói vay",
+    "homeLoan": "Vay mua nhà",
+    "carLoan": "Vay mua ô tô",
+    "consumerLoan": "Vay tiêu dùng",
+    "creditCard": "Thẻ tín dụng",
+    "businessLoan": "Vay hộ kinh doanh",
+    "savings": "Gửi tiết kiệm",
+    "insurance": "Bảo hiểm",
+    "calculators": "Công cụ tính lãi",
+    "guides": "Cẩm nang tài chính",
+    "account": "Tài khoản",
+    "admin": "Quản trị viên"
+  },
+  "pdp": {
+    "title": "Bảo vệ Dữ liệu Cá nhân (Luật số 91/2025/QH15 & Nghị định 356/2025/NĐ-CP)",
+    "consentHeading": "Đồng thuận xử lý dữ liệu và chuyển tiếp thông tin tư vấn",
+    "consentCheckbox": "Tôi đã đọc, hiểu rõ và ĐỒNG Ý cho Finazen thu thập, xử lý và chuyển tiếp thông tin cá nhân trên đến tổ chức tài chính/ngân hàng đối tác được tôi lựa chọn nhằm mục đích duy nhất là tư vấn sản phẩm tài chính theo yêu cầu này.",
+    "purposeLimitation": "Mục đích sử dụng: Chỉ sử dụng để liên hệ tư vấn khoản vay/tiết kiệm/bảo hiểm và đối soát với tổ chức đối tác được chỉ định.",
+    "dataSubjectRights": "Quyền của chủ thể dữ liệu: Quý khách có quyền truy cập, yêu cầu chỉnh sửa, xóa dữ liệu cá nhân hoặc rút lại sự đồng ý bất kỳ lúc nào tại mục Quản lý Tài khoản.",
+    "retentionPolicy": "Thời hạn lưu trữ: Tối đa 12 tháng kể từ ngày hoàn tất chuyển tiếp tư vấn hoặc theo quy định pháp luật hiện hành.",
+    "untickedNotice": "Hộp kiểm đồng thuận này mặc định KHÔNG ĐƯỢC CHỌN trước theo quy định của pháp luật Việt Nam.",
+    "auditRecorded": "Lịch sử đồng thuận của bạn được ghi nhận mã hoá nhằm bảo đảm tính minh bạch và bảo mật."
+  },
+  "finance": {
+    "currencyUnit": "₫",
+    "percentUnit": "%/năm",
+    "monthsUnit": "tháng",
+    "yearsUnit": "năm",
+    "reducingBalance": "Dư nợ giảm dần",
+    "flatRate": "Dư nợ ban đầu (lãi phẳng)",
+    "principal": "Số tiền vay",
+    "tenure": "Thời gian vay",
+    "interestRate": "Lãi suất năm",
+    "gracePeriod": "Thời gian ưu đãi lãi suất"
+  },
+  "roles": {
+    "user": "Khách hàng",
+    "advisor": "Chuyên viên tư vấn",
+    "partner": "Đại diện đối tác",
+    "admin": "Quản trị hệ thống"
+  }
+}
