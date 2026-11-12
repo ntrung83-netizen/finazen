@@ -1,4 +1,4 @@
-import { auth } from './client';
+import { auth } from './client.ts';
 
 export enum OperationType {
   CREATE = 'create',

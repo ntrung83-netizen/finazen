@@ -12,8 +12,8 @@ import {
   QueryDocumentSnapshot,
   DocumentData,
 } from 'firebase/firestore';
-import { db } from './client';
-import { handleFirestoreError, OperationType } from './errors';
+import { db } from './client.ts';
+import { handleFirestoreError, OperationType } from './errors.ts';
 
 export interface PaginatedResult<T> {
   items: T[];
